@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/styles/style.css">
+        <title>MINI CHAT</title>
+    </head>
+    <style>
+        html{
+        font-size: 62.5%;
+        }
+        body{
+            font-size: 16px; /* 1rem = 10px */
+            font-family: 'Krub', sans-serif;
+        }
+        /* ESTILOS GLOBALES */
+        .container{
+            max-width: 85rem;
+            margin:  0 auto;
+            border: solid 3px #00ABB3;
+            border-radius: 15px ;
+            background-color: #3C4048;
+            -webkit-box-shadow: 2px 4px 20px 0px rgba(0,0,0,0.75);
+            -moz-box-shadow: 2px 4px 20px 0px rgba(0,0,0,0.75);
+            box-shadow: 2px 4px 20px 0px rgba(0,0,0,0.75);
+            
+        }
+        .header{
+            text-align: center;
+            color: #ffff;
+            background-color: #00ABB3;
+            padding: 1rem;
+            margin: 0;
+            border-radius: 10px 10px 0 0 ;
+        }
+        .chat_interface{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 100%;
+            height: 35rem;
+            background-color: #B2B2B2;
+            border-radius: 0 0 10px 10px;
+
+            -webkit-box-shadow: inset 2px 4px 20px 0px rgba(0,0,0,0.75);
+            -moz-box-shadow: inset 2px 4px 20px 0px rgba(0,0,0,0.75);
+            box-shadow: inset 2px 4px 20px 0px rgba(0,0,0,0.75);
+        }
+        .input_text{
+            max-width: 100%;
+            display: flex;
+            gap: 1rem;
+            margin: 1rem;
+        }
+        .input_text input{
+            width: 100%;
+            padding:10px;
+            border:0;
+            box-shadow:0 0 15px 4px rgba(0,0,0,0.06);
+            border-radius: 15px;
+            -webkit-box-shadow: 2px 0px 12px -3px rgba(0,0,0,0.68);
+            -moz-box-shadow: 2px 0px 12px -3px rgba(0,0,0,0.68);
+            box-shadow: 2px 0px 12px -3px rgba(0,0,0,0.68);
+        }
+        .input_text button{
+            padding:10px;
+            border:0;
+            border-radius: 12px;
+            color: #ffff;
+            font-weight: 700;
+            background-color: #00ABB3;
+        }
+    </style>
+    <body>
+        <main class="container">
+            <div class="header">
+                <h1>python && Socket_IO</h1>
+            </div>
+            <div class="chat_interface">
+                <div class="chat_text">
+                    <ul id="message"></ul>
+                </div>
+            </div>
+            <div class="input_text">
+                <input id="input" type="text" placeholder="Insert text">
+                <button id="send" type="button">Send</button>
+            </div>
+        </main>
+        <script
+            src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+            crossorigin="anonymous">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.3/socket.io.js"></script>
+        <script>
+            const socket = io();
+            socket.emit('message','hello world');
+            socket.on('message', function(msg){
+                $('#message').append('<li>' + msg + '</li>')
+            })
+
+            $('#send').on('click', function() {
+                socket.send($('#input').val());
+                $('#input').val('');
+            })
+            
+        </script>
+    </body>
+</html>
